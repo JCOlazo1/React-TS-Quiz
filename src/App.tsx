@@ -1,3 +1,5 @@
+// This is where the magic happens. This is your "main" file.
+
 import React, { useState } from 'react';
 import { fetchQuizQuestions } from './API';
 // Components:
@@ -12,7 +14,8 @@ export type AnswerObject = {
   correctAnswer: string;
 }
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 10; // Number of questions
+const CATEGORY = 15; // The number corresponds to the API's value of what category it is. 15 is for video games.
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -22,15 +25,19 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
+  // Start the game
   const startTrivia = async () => {
     setLoading(true);
     setGameOver(false);
 
+    // Try to fix this section so it's 'video game questions' only
     const newQuestions = await fetchQuizQuestions(
       TOTAL_QUESTIONS,
       Difficulty.EASY,
+      CATEGORY,
     );
 
+    // Reset everything when it's done
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
